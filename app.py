@@ -50,13 +50,13 @@ def predict_disease(age, gender, symptoms, family_history, smoking, alcohol):
         risk_score = min(risk_factors + np.random.uniform(0, 0.2), 1.0)
         
         if risk_score > 0.7:
-            risk_level = "高风险 🔴"
+            risk_level = "高风险"
             recommendations = "建议立即就医检查，进行详细的医学评估"
         elif risk_score > 0.4:
-            risk_level = "中等风险 🟡"
+            risk_level = "中等风险"
             recommendations = "建议定期体检，注意观察症状变化"
         else:
-            risk_level = "低风险 🟢"
+            risk_level = "低风险"
             recommendations = "保持健康生活方式，定期体检"
         
         return {
@@ -73,7 +73,7 @@ def analyze_panda_data(file, federated_learning, privacy_protection, privacy_lev
     """Panda算法数据分析函数"""
     try:
         if file is None:
-            return "❌ 请上传数据文件", "", ""
+            return "请上传数据文件", "", ""
         
         # 读取文件
         if file.name.endswith('.csv'):
@@ -81,7 +81,7 @@ def analyze_panda_data(file, federated_learning, privacy_protection, privacy_lev
         elif file.name.endswith(('.xlsx', '.xls')):
             df = pd.read_excel(file.name)
         else:
-            return "❌ 不支持的文件格式", "", ""
+            return "不支持的文件格式", "", ""
         
         # 数据统计
         n_samples, n_features = df.shape
@@ -111,27 +111,27 @@ def analyze_panda_data(file, federated_learning, privacy_protection, privacy_lev
         
         # 生成分析报告
         analysis_report = f"""
-🔍 **数据分析报告**
+数据分析报告
 
-📊 **数据概览**
+数据概览
 - 样本数量: {n_samples:,}
 - 特征数量: {n_features}
 - 缺失值: {missing_values} ({missing_rate:.1f}%)
 
-🤖 **模型性能**
+模型性能
 - 准确率: {accuracy:.3f}
 - 精确率: {precision:.3f}
 - 召回率: {recall:.3f}
 - F1分数: {f1_score:.3f}
 
-⚙️ **训练配置**
-- 联邦学习: {'✅ 启用' if federated_learning else '❌ 禁用'}
-- 隐私保护: {'✅ 启用' if privacy_protection else '❌ 禁用'}
+训练配置
+- 联邦学习: {'启用' if federated_learning else '禁用'}
+- 隐私保护: {'启用' if privacy_protection else '禁用'}
 - 隐私级别: {privacy_level}
 - 参与节点: {nodes}
 - 训练时间: {training_time:.1f}秒
 
-⏰ **分析时间**: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+分析时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
         """
         
         # 生成数据预览
@@ -143,14 +143,14 @@ def analyze_panda_data(file, federated_learning, privacy_protection, privacy_lev
         return analysis_report, data_preview, stats_info
         
     except Exception as e:
-        return f"❌ 分析失败: {str(e)}", "", ""
+        return f"分析失败: {str(e)}", "", ""
 
 # 多模态分析函数
 def analyze_multimodal_data(text_input, data_type):
     """多模态数据分析函数"""
     try:
         if not text_input.strip():
-            return "❌ 请输入要分析的文本内容"
+            return "请输入要分析的文本内容"
         
         analysis_results = {
             "医学文献": {
@@ -176,36 +176,36 @@ def analyze_multimodal_data(text_input, data_type):
         result = analysis_results.get(data_type, analysis_results["医学文献"])
         
         return f"""
-🔍 **多模态分析结果**
+多模态分析结果
 
-📝 **文本类型**: {data_type}
-📊 **分析置信度**: {result['置信度']:.2f}
-🎯 **主要主题**: {result['主题']}
-😊 **情感倾向**: {result['情感分析']}
+文本类型: {data_type}
+分析置信度: {result['置信度']:.2f}
+主要主题: {result['主题']}
+情感倾向: {result['情感分析']}
 
-🔑 **关键词提取**:
+关键词提取:
 {', '.join(result['关键词'])}
 
-📈 **文本统计**:
+文本统计:
 - 字符数: {len(text_input)}
 - 词汇数: {len(text_input.split())}
 - 句子数: {text_input.count('。') + text_input.count('.')}
 
-⏰ **分析时间**: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+分析时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
         """
     except Exception as e:
-        return f"❌ 分析失败: {str(e)}"
+        return f"分析失败: {str(e)}"
 
 # 创建Gradio界面
 def create_interface():
     """创建Gradio界面"""
     with gr.Blocks(title="疾病预测系统", theme=gr.themes.Soft()) as demo:
-        gr.Markdown("# 🏥 疾病预测系统 (Disease Prediction System)")
+        gr.Markdown("# 疾病预测系统 (Disease Prediction System)")
         gr.Markdown("基于先进AI技术的疾病预测与分析平台")
         
         with gr.Tabs():
             # 疾病预测标签页
-            with gr.TabItem("🔍 疾病预测"):
+            with gr.TabItem("疾病预测"):
                 gr.Markdown("### 个人健康风险评估")
                 with gr.Row():
                     with gr.Column():
@@ -219,7 +219,7 @@ def create_interface():
                         family_history = gr.Checkbox(label="有家族病史", value=False)
                         smoking = gr.Checkbox(label="吸烟", value=False)
                         alcohol = gr.Checkbox(label="饮酒", value=False)
-                        predict_btn = gr.Button("🔍 开始预测", variant="primary")
+                        predict_btn = gr.Button("开始预测", variant="primary")
                     
                     with gr.Column():
                         prediction_output = gr.JSON(label="预测结果")
@@ -232,7 +232,7 @@ def create_interface():
                 )
             
             # Panda算法标签页
-            with gr.TabItem("🐼 Panda算法"):
+            with gr.TabItem("Panda算法"):
                 gr.Markdown("### 隐私保护的联邦学习数据分析")
                 with gr.Row():
                     with gr.Column():
@@ -247,7 +247,7 @@ def create_interface():
                             label="隐私级别", 
                             value="高"
                         )
-                        analyze_btn = gr.Button("🚀 开始分析", variant="primary")
+                        analyze_btn = gr.Button("开始分析", variant="primary")
                     
                     with gr.Column():
                         analysis_output = gr.Textbox(
@@ -274,7 +274,7 @@ def create_interface():
                 )
             
             # 多模态分析标签页
-            with gr.TabItem("📊 多模态分析"):
+            with gr.TabItem("多模态分析"):
                 gr.Markdown("### 医学文本数据分析")
                 with gr.Row():
                     with gr.Column():
@@ -288,7 +288,7 @@ def create_interface():
                             label="数据类型",
                             value="医学文献"
                         )
-                        multimodal_btn = gr.Button("🔬 开始分析", variant="primary")
+                        multimodal_btn = gr.Button("开始分析", variant="primary")
                     
                     with gr.Column():
                         multimodal_output = gr.Textbox(
@@ -303,30 +303,30 @@ def create_interface():
                 )
             
             # 关于标签页
-            with gr.TabItem("ℹ️ 关于"):
+            with gr.TabItem("关于"):
                 gr.Markdown("""
                 ## 关于疾病预测系统
                 
                 这是一个基于先进AI技术的疾病预测与分析平台，提供以下功能：
                 
-                ### 🔍 疾病预测
+                ### 疾病预测
                 - 基于症状和个人信息进行疾病风险评估
                 - 提供个性化的健康建议
                 - 多维度风险分析
                 
-                ### 🐼 Panda算法
+                ### Panda算法
                 - 隐私保护的联邦学习算法
                 - 支持多种数据格式
                 - 实时数据分析和可视化
                 - 数据填充和预处理
                 
-                ### 📊 多模态分析
+                ### 多模态分析
                 - 医学文本数据分析
                 - 关键词提取
                 - 情感分析
                 - 主题识别
                 
-                ### ⚠️ 免责声明
+                ### 免责声明
                 本系统仅用于研究和教育目的，不能替代专业医疗诊断。如有健康问题，请咨询专业医生。
                 """)
     
